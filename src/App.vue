@@ -1,14 +1,14 @@
 <template>
   <div class="editor-container">
     <div class="viewport">
-      <Canvas />
+      <SVGRenderer />
       <Overlays />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import Canvas from "./ui/canvas.vue";
+import SVGRenderer from "./renderer/svg/renderer.vue";
 import Overlays from "./ui/overlays.vue";
 </script>
 

@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { screenToCanvas } from "../utils";
 import type { VecLike } from "../types";
+import { PRECISION_THRESHOLDS } from "../constants";
 
 export const useCameraStore = defineStore("camera", {
   state: () => ({
@@ -8,6 +9,18 @@ export const useCameraStore = defineStore("camera", {
     y: 0,
     z: 1,
   }),
+
+  getters: {
+    precision(state) {
+      for (let i = 0; i < PRECISION_THRESHOLDS.length; i++) {
+        if (state.z <= PRECISION_THRESHOLDS[i][0]) {
+          return PRECISION_THRESHOLDS[i][1];
+        }
+      }
+
+      return PRECISION_THRESHOLDS[PRECISION_THRESHOLDS.length - 1][1];
+    },
+  },
 
   actions: {
     pan(deltaX: number, deltaY: number) {
