@@ -4,29 +4,29 @@
       x="0"
       y="0"
       :width="editor.canvas.width"
-      :height="editor.ruler.width"
+      :height="editor.ui.ruler.width"
       fill="white"
     ></rect>
     <rect
       x="0"
       y="0"
-      :width="editor.ruler.width"
+      :width="editor.ui.ruler.width"
       :height="editor.canvas.height"
       fill="white"
     ></rect>
     <path :d="horizontalPath" stroke="var(--ruler-color)"></path>
     <line
       :x1="0"
-      :y1="editor.ruler.width"
+      :y1="editor.ui.ruler.width"
       :x2="editor.canvas.width"
-      :y2="editor.ruler.width"
+      :y2="editor.ui.ruler.width"
       stroke="var(--ruler-color)"
       stroke-width="0.5"
     ></line>
     <text
       v-for="tick in horizontalTicks"
       :x="tick.offset * camera.z"
-      :y="editor.ruler.width - 9"
+      :y="editor.ui.ruler.width - 9"
       font-family="Arial"
       text-anchor="middle"
       font-weight="normal"
@@ -37,19 +37,19 @@
     </text>
     <path :d="verticalPath" stroke="var(--ruler-color)"></path>
     <line
-      :x1="editor.ruler.width"
+      :x1="editor.ui.ruler.width"
       :y1="0"
-      :x2="editor.ruler.width"
+      :x2="editor.ui.ruler.width"
       :y2="editor.canvas.height"
       stroke="var(--ruler-color)"
       stroke-width="0.5"
     ></line>
     <text
       v-for="tick in verticalTicks"
-      :x="editor.ruler.width - 9"
+      :x="editor.ui.ruler.width - 9"
       :y="tick.offset * camera.z"
       text-anchor="middle"
-      :transform="`rotate(-90, ${editor.ruler.width - 9}, ${
+      :transform="`rotate(-90, ${editor.ui.ruler.width - 9}, ${
         tick.offset * camera.z
       })`"
       font-size="10"
@@ -61,8 +61,8 @@
     </text>
     <rect
       fill="white"
-      :width="editor.ruler.width - 1"
-      :height="editor.ruler.width - 1"
+      :width="editor.ui.ruler.width - 1"
+      :height="editor.ui.ruler.width - 1"
     ></rect>
   </g>
 </template>
@@ -89,7 +89,7 @@ const verticalTicks = useTicks(y, height, precision);
 
 const horizontalPath = computed(() => {
   const paths: string[] = [];
-  const rulerWidth = editor.ruler.width;
+  const rulerWidth = editor.ui.ruler.width;
 
   horizontalTicks.value.forEach((tick) => {
     paths.push(
@@ -104,7 +104,7 @@ const horizontalPath = computed(() => {
 
 const verticalPath = computed(() => {
   const paths: string[] = [];
-  const rulerWidth = editor.ruler.width;
+  const rulerWidth = editor.ui.ruler.width;
 
   verticalTicks.value.forEach((tick) => {
     paths.push(

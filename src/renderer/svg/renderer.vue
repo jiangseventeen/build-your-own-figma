@@ -4,7 +4,10 @@
       :width="editor.canvas.width"
       :height="editor.canvas.height"
       shape-rendering="crispEdges"
+      :style="{ backgroundColor: editor.canvas.backgroundColor }"
     >
+      <Grid v-if="camera.z > 4" />
+
       <g :style="canvasStyles">
         <!-- layers renderer -->
         <rect width="100" height="100" fill="red" />
@@ -20,6 +23,7 @@ import { ref, computed, onMounted } from "vue";
 import { useCameraStore } from "../../stores/camera";
 import { useEditorStore } from "../../stores/editor";
 import Guide from "./guide.vue";
+import Grid from "./grid.vue";
 
 const rendererRef = ref<HTMLElement>();
 const camera = useCameraStore();
@@ -37,6 +41,17 @@ onMounted(() => {
     rendererRef.value!.clientWidth,
     rendererRef.value!.clientHeight
   );
+
+  const resizeObserver = new ResizeObserver((entries) => {
+    editor.updateCanvasSize(
+      entries[0].contentRect.width,
+      entries[0].contentRect.height
+    );
+  });
+
+  if (rendererRef.value) {
+    resizeObserver.observe(rendererRef.value);
+  }
 });
 </script>
 

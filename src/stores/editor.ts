@@ -3,14 +3,20 @@ import { useCameraStore } from "./camera";
 
 export const useEditorStore = defineStore("editor", {
   state: () => ({
-    ruler: {
-      width: 20,
-      enabled: true,
-      color: "#C2C2C2",
+    ui: {
+      grid: {
+        enabled: true,
+      },
+      ruler: {
+        enabled: true,
+        width: 20,
+      },
     },
+    layout: {},
     canvas: {
       width: 0,
       height: 0,
+      backgroundColor: "#C2C2C2",
     },
   }),
 

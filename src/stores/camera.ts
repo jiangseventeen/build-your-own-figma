@@ -3,6 +3,9 @@ import { screenToCanvas } from "../utils";
 import type { VecLike } from "../types";
 import { PRECISION_THRESHOLDS } from "../constants";
 
+const ZOOM_FACTOR = 1.5;
+const PAN_FACTOR = 1.5;
+
 export const useCameraStore = defineStore("camera", {
   state: () => ({
     x: 0,
@@ -24,12 +27,16 @@ export const useCameraStore = defineStore("camera", {
 
   actions: {
     pan(deltaX: number, deltaY: number) {
-      this.x -= deltaX / this.z;
-      this.y -= deltaY / this.z;
+      this.x -= (deltaX * PAN_FACTOR) / this.z;
+      this.y -= (deltaY * PAN_FACTOR) / this.z;
     },
 
     zoom(point: VecLike, deltaZ: number) {
-      const zoom = this.z - deltaZ * this.z;
+      let zoom = this.z - deltaZ * ZOOM_FACTOR * this.z;
+
+      if (zoom < 0.02 || zoom > 250) {
+        return;
+      }
 
       const p1 = screenToCanvas(this, point);
       const p2 = screenToCanvas({ ...this, z: zoom }, point);
